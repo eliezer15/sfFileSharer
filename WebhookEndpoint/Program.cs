@@ -7,6 +7,7 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace WebhookEndpoint
 {
@@ -20,6 +21,8 @@ namespace WebhookEndpoint
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
+                .UseSerilog((hostingContext, loggerConfig ) => loggerConfig
+                    .WriteTo.File("log.txt"))
                 .Build();
     }
 }

@@ -3,7 +3,7 @@ using WebhookEndpoint.Models;
 
 namespace WebhookEndpoint.Services
 {
-    public interface IWebhookService
+    public interface IWebhooksService
     {
         Task ProcessEventAsync(SfEvent sfEvent);
     }

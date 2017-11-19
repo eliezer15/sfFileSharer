@@ -12,7 +12,7 @@ using WebhookEndpoint.Models;
 
 namespace WebhookEndpoint.Services
 {
-    public class WebhooksService
+    public class WebhooksService : IWebhooksService
     {
         private readonly IShareFileClientFactory _sfClientFactory;
         private readonly string _queueUrl;
@@ -38,6 +38,8 @@ namespace WebhookEndpoint.Services
                 var share = await GetShareAsync(sfClient, file);
 
                 await Enqueue(file, share);
+
+                _logger.LogInformation("File processed successfully");
             }
             catch(Exception ex)
             {

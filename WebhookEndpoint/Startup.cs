@@ -9,6 +9,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using WebhookEndpoint.Models;
+using WebhookEndpoint.Services;
 
 namespace WebhookEndpoint
 {
@@ -28,6 +30,10 @@ namespace WebhookEndpoint
 
             services.AddDefaultAWSOptions(Configuration.GetAWSOptions());
             services.AddAWSService<IAmazonSQS>();
+            services.AddSingleton<IShareFileClientFactory, ShareFileClientFactory>();
+            services.AddSingleton<IHealthCheckService, HealthCheckService>();
+            services.AddScoped<IWebhooksService, WebhooksService>();
+            services.Configure<ShareFileOptions>(Configuration.GetSection("ShareFile"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
