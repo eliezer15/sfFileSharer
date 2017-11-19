@@ -20,7 +20,7 @@ namespace WebhookEndpoint.Services
             {
                 using (var client = new HttpClient())
                 {
-                    instanceId = await client.GetStringAsync("http://169.254.169.254/latest/meta-data/instance-ud");
+                    instanceId = await client.GetStringAsync("http://169.254.169.254/latest/meta-data/instance-id");
                 }
             }
 

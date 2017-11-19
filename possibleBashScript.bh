@@ -1,0 +1,7 @@
+yum update -y
+yum install libunwind -y
+wget https://download.microsoft.com/download/5/C/1/5C190037-632B-443D-842D-39085F02E1E8/dotnet-runtime-2.0.3-linux-x64.tar.gz
+mkdir -p $HOME/dotnet && tar zxf dotnet-runtime-2.0.3-linux-x64.tar.gz -C $HOME/dotnet
+export PATH=$PATH:$HOME/dotnet
+aws s3 cp --recursive s3://sf-file-sharer/WebhookEndpoint webhookEndpoint/
+dotnet webhookEndpoint/WebhookEndpoint.dll
