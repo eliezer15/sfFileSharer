@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
@@ -15,19 +16,21 @@ namespace WebhookEndpoint
     {
         public static void Main(string[] args)
         {
+            System.Environment.CurrentDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             BuildWebHost(args).Run();
         }
 
         public static IWebHost BuildWebHost(string[] args)
         {
-            var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-            var urls = environment == EnvironmentName.Development
-                ? "http://localhost:5050"
-                : "http://*:80";
+            var config = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("hosting.json", optional: true)
+                .AddCommandLine(args)
+                .Build();
 
             return WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
-                .UseUrls(urls)
+                .UseConfiguration(config)
                 .UseSerilog((hostingContext, loggerConfig ) => loggerConfig
                     .WriteTo.File("log.txt"))
                 .Build();
