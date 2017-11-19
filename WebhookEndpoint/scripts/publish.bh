@@ -3,5 +3,4 @@
 dotnet publish -c Release -r centos-x64
 cd bin/Release/netcoreapp2.0/centos-x64/publish
 rm appsettings.Development.json
-echo -e "{\"urls\":\"http://*:80\"}" > hosting.json
 aws s3 sync . s3://sf-file-sharer/WebhookEndpoint

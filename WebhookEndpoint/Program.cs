@@ -20,15 +20,14 @@ namespace WebhookEndpoint
 
         public static IWebHost BuildWebHost(string[] args)
         {
-            var config = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("hosting.json", optional: true)
-                .AddCommandLine(args)
-                .Build();
+            var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+            var urls = environment == EnvironmentName.Development
+                ? "http://localhost:5050"
+                : "http://*:80";
 
             return WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
-                .UseConfiguration(config)
+                .UseUrls(urls)
                 .UseSerilog((hostingContext, loggerConfig ) => loggerConfig
                     .WriteTo.File("log.txt"))
                 .Build();
