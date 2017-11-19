@@ -1,3 +1,4 @@
+#!/bin/bash
 yum update -y
 yum install libunwind -y
 wget https://download.microsoft.com/download/5/C/1/5C190037-632B-443D-842D-39085F02E1E8/dotnet-runtime-2.0.3-linux-x64.tar.gz
